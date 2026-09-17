@@ -4,6 +4,7 @@
     "slug": "karaboguard",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "tshehlakgolo",
     "splash": {
       "backgroundColor": "#ffffff",
       "resizeMode": "contain"
@@ -12,6 +13,11 @@
       "package": "com.karaboguard.app",
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
       }
     }
   }
