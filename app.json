@@ -1,34 +1,17 @@
 {
   "expo": {
-    "name": "karaboguard",
+    "name": "KaraboGuard",
     "slug": "karaboguard",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
+      "backgroundColor": "#ffffff",
+      "resizeMode": "contain"
     },
     "android": {
       "package": "com.karaboguard.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
       }
     }
   }
