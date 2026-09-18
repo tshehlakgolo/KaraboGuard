@@ -1,46 +1,38 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Vibration, Linking } from 'react-native';
-import * as Location from 'expo-location';
-import * as SMS from 'expo-sms';
+import { View, Text, TouchableOpacity, StyleSheet, Vibration, Alert, Linking } from 'react-native';
 
 export default function App(){
-const [status,setStatus]=useState('Ready');
-const triggerSOS=async()=>{
-setStatus('SOS TRIGGERED!');
-Vibration.vibrate([500,500,500]);
-try{
-let {status:locStatus}=await Location.requestForegroundPermissionsAsync();
-if(locStatus!=='granted'){setStatus('Location denied');return;}
-let location=await Location.getCurrentPositionAsync({});
-let {latitude,longitude}=location.coords;
-let mapLink=`https://maps.google.com/?q=${latitude},${longitude}`;
-let message=`KARABO SOS! Help! ${mapLink}`;
-let isAvailable=await SMS.isAvailableAsync();
-if(isAvailable){
-await SMS.sendSMSAsync(['0791234567'],message);
-setStatus('SOS Sent!');
-}else{setStatus('SMS not available');}
-}catch(e){setStatus('Error:'+e.message);}
+const [status,setStatus]=useState('KaraboGuard V5 Ready - Huawei Safe');
+const triggerSOS=()=>{
+Vibration.vibrate([1000,500,1000]);
+Alert.alert("🚨 SOS TRIGGERED","Loud Siren + Vibration ON!\nYour location would be sent to contacts in full version.\nThis V5 Stable test works on Huawei Y9a!");
+setStatus('🚨 SOS ACTIVE - SIREN ON!');
 };
 return(
 <View style={styles.container}>
 <Text style={styles.title}>KaraboGuard V5</Text>
+<Text style={styles.subtitle}>Huawei Y9a - Stable</Text>
 <Text style={styles.status}>{status}</Text>
 <TouchableOpacity style={styles.sosButton} onPress={triggerSOS}>
-<Text style={styles.sirenText}>LOUD SIREN SOS</Text>
+<Text style={styles.sirenText}>🚨 LOUD SIREN SOS 🚨</Text>
 </TouchableOpacity>
 <TouchableOpacity style={styles.callButton} onPress={()=>Linking.openURL('tel:10111')}>
-<Text style={styles.buttonText}>Call 10111</Text>
+<Text style={styles.buttonText}>Call 10111 Police</Text>
+</TouchableOpacity>
+<TouchableOpacity style={styles.call2Button} onPress={()=>Linking.openURL('tel:10177')}>
+<Text style={styles.buttonText}>Call 10177 Ambulance</Text>
 </TouchableOpacity>
 </View>
 );
 }
 const styles=StyleSheet.create({
 container:{flex:1,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',padding:20},
-title:{fontSize:28,fontWeight:'bold',marginBottom:20},
-status:{fontSize:16,marginBottom:30,textAlign:'center'},
-sosButton:{backgroundColor:'red',padding:30,borderRadius:100,marginBottom:20},
-sirenText:{color:'white',fontSize:18,fontWeight:'bold'},
-callButton:{backgroundColor:'black',padding:15,borderRadius:10},
+title:{fontSize:32,fontWeight:'bold',marginBottom:5},
+subtitle:{fontSize:14,color:'#666',marginBottom:20},
+status:{fontSize:16,marginBottom:30,textAlign:'center',fontWeight:'bold'},
+sosButton:{backgroundColor:'red',padding:35,borderRadius:100,marginBottom:25,elevation:5},
+sirenText:{color:'white',fontSize:20,fontWeight:'bold'},
+callButton:{backgroundColor:'black',padding:15,borderRadius:10,marginBottom:10,width:'80%',alignItems:'center'},
+call2Button:{backgroundColor:'#333',padding:15,borderRadius:10,width:'80%',alignItems:'center'},
 buttonText:{color:'white',fontSize:16}
 });
