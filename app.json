@@ -3,20 +3,13 @@
     "name": "KaraboGuard",
     "slug": "KaraboGuard",
     "version": "6.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./IMG-20260918-WA7871.jpg",
     "android": {
       "package": "com.karabo.guard",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./IMG-20260918-WA7871.jpg",
         "backgroundColor": "#ffffff"
       }
-    },
-    "platforms": ["android"]
+    }
   }
 }
