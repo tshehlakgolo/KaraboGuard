@@ -10,6 +10,11 @@
         "foregroundImage": "./IMG-20260918-WA7871.jpg",
         "backgroundColor": "#ffffff"
       }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
+      }
     }
   }
 }
