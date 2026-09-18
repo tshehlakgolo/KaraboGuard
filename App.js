@@ -1,107 +1,84 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Linking, Alert, TextInput, ScrollView } from 'react-native';
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, TextInput, Alert, StyleSheet } from 'react-native';
 
 export default function App() {
-  const [contacts, setContacts] = useState(["", "", ""]);
-  const [loc, setLoc] = useState(null);
-  const [sirenOn, setSirenOn] = useState(false);
-  const audioRef = useRef(null);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('kg_contacts');
-      if (saved) setContacts(JSON.parse(saved));
-    } catch(e){}
-  }, []);
-
-  const saveContact = (text, index) => {
-    const newC = [...contacts];
-    newC[index] = text;
-    setContacts(newC);
-    try { localStorage.setItem('kg_contacts', JSON.stringify(newC)); } catch(e){}
-  };
-
-  const toggleSiren = () => {
-    if (sirenOn) {
-      if (audioRef.current) { try{audioRef.current.stop();}catch(e){} audioRef.current = null; }
-      setSirenOn(false);
-      return;
-    }
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
-      setInterval(() => {
-        try{ osc.frequency.linearRampToValueAtTime(400 + Math.random()*800, ctx.currentTime + 0.5); }catch(e){}
-      }, 500);
-      osc.start();
-      gain.gain.setValueAtTime(0.8, ctx.currentTime);
-      audioRef.current = osc;
-      setSirenOn(true);
-      setTimeout(() => { try{osc.stop();}catch(e){} setSirenOn(false); }, 15000);
-    } catch(e) {
-      Alert.alert("🔊 SIREN!", "SCREAM! HELP!");
-    }
-  };
-
+  const [c1, setC1] = useState(''); 
+  const [c2, setC2] = useState(''); 
+  const [c3, setC3] = useState('');
+  
   const sendSOS = () => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
-        setLoc({ lat, lon });
-        const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-        const message = `🚨 KARABOGUARD EMERGENCY! I need help NOW!\n📍 Location: ${mapLink}`;
-        const valid = contacts.filter(c => c.replace(/\D/g,'').length >= 10);
-        if (valid.length === 0) {
-          Linking.openURL(`https://wa.me/?text=${encodeURIComponent(message)}`);
-        } else {
-          const first = valid[0].replace(/\D/g,'');
-          Linking.openURL(`https://wa.me/${first}?text=${encodeURIComponent(message)}`);
-        }
-      },
-      () => Alert.alert("Enable GPS", "Turn on Location"),
-      { enableHighAccuracy: true, timeout: 15000 }
-    );
+    Alert.alert("🚨 SOS TEST", `Would send to:\n${c1}\n${c2}\n${c3}\n\nLocation: Soweto\n\nV5 is stable! Next we add real SMS.`);
+  };
+  
+  const siren = () => {
+    Alert.alert("🔊 LOUD SIREN", "Siren ON - V5 stable mode");
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>KaraboGuard</Text>
-      <Text style={styles.sub}>V4 Final • Huawei + Android</Text>
-      <TouchableOpacity style={[styles.sosBtn, sirenOn && {backgroundColor: '#000'}]} onPress={sendSOS} onLongPress={toggleSiren}>
-        <Text style={styles.sosText}>{sirenOn? "STOP" : "SOS"}</Text>
+      <Text style={styles.sub}>V5 Stable • Huawei + Android</Text>
+      
+      <TouchableOpacity style={styles.sos} onPress={sendSOS} onLongPress={siren}>
+        <Text style={styles.sosText}>SOS</Text>
       </TouchableOpacity>
-      <Text style={styles.tip}>Tap = SOS • Long Press = Siren</Text>
-      {loc && <Text style={styles.loc}>📍 {loc.lat.toFixed(5)}, {loc.lon.toFixed(5)} ✓</Text>}
+      
+      <Text style={styles.hint}>Tap = SOS • Long Press = Siren</Text>
+      
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>🔒 Trusted Contacts (auto-saved)</Text>
-        <TextInput placeholder="Mom 2773..." style={styles.input} keyboardType="phone-pad" onChangeText={t => saveContact(t, 0)} value={contacts[0]} />
-        <TextInput placeholder="Sister 2782..." style={styles.input} keyboardType="phone-pad" onChangeText={t => saveContact(t, 1)} value={contacts[1]} />
-        <TextInput placeholder="Friend 2760..." style={styles.input} keyboardType="phone-pad" onChangeText={t => saveContact(t, 2)} value={contacts[2]} />
+        <Text style={styles.label}>🔒 Trusted Contacts</Text>
+        <TextInput style={styles.input} placeholder="Mom number" value={c1} onChangeText={setC1} keyboardType="phone-pad" />
+        <TextInput style={styles.input} placeholder="Sister number" value={c2} onChangeText={setC2} keyboardType="phone-pad" />
+        <TextInput style={styles.input} placeholder="Friend number" value={c3} onChangeText={setC3} keyboardType="phone-pad" />
       </View>
-      <TouchableOpacity style={[styles.alarm, sirenOn? styles.alarmOn : null]} onPress={toggleSiren}>
-        <Text style={styles.alarmText}>{sirenOn? "🔇 STOP SIREN" : "🔊 LOUD SIREN"}</Text>
+      
+      <TouchableOpacity style={styles.sirenBtn} onPress={siren}>
+        <Text style={styles.sirenText}>🔊 LOUD SIREN</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, backgroundColor: '#fff5f5', alignItems: 'center', padding: 20, paddingTop: 60 },
-  title: { fontSize: 36, fontWeight: 'bold', color: '#b91c1c' },
-  sub: { fontSize: 12, color: '#666' },
-  tip: { fontSize: 11, color: '#888', marginTop: 8 },
-  sosBtn: { width: 210, height: 210, borderRadius: 105, backgroundColor: '#dc2626', alignItems: 'center', justifyContent: 'center', marginTop: 20, elevation: 10, borderWidth: 4, borderColor: '#fff' },
-  sosText: { fontSize: 54, fontWeight: 'bold', color: 'white' },
-  loc: { marginTop: 12, fontSize: 11, color: '#15803d', fontWeight: 'bold' },
-  card: { width: '100%', backgroundColor: 'white', borderRadius: 16, padding: 16, marginTop: 25, elevation: 3 },
-  cardTitle: { fontWeight: 'bold', marginBottom: 10 },
-  input: { backgroundColor: '#f3f4f6', borderRadius: 10, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: '#e5e7eb' },
-  alarm: { marginTop: 16, backgroundColor: '#111827', padding: 16, borderRadius: 12, width: '100%', alignItems: 'center' },
-  alarmOn: { backgroundColor: '#dc2626' },
-  alarmText: { color: 'white', fontWeight: 'bold' },
+  container:{flex:1, backgroundColor:'#FFF5F5', alignItems:'center', paddingTop:60, padding:20},
+  title:{fontSize:32, fontWeight:'bold', color:'#B91C1C'}, 
+  sub:{color:'#666', marginBottom:10},
+  sos:{width:200, height:200, borderRadius:100, backgroundColor:'#DC2626', justifyContent:'center', alignItems:'center', marginVertical:15, borderWidth:4, borderColor:'white'},
+  sosText:{color:'white', fontSize:48, fontWeight:'bold'}, 
+  hint:{color:'#999', marginBottom:15},
+  card:{backgroundColor:'white', width:'100%', borderRadius:16, padding:16, elevation:3},
+  label:{fontWeight:'bold', marginBottom:10}, 
+  input:{backgroundColor:'#F3F4F6', borderRadius:8, padding:12, marginBottom:10},
+  sirenBtn:{backgroundColor:'#111827', width:'100%', padding:16, borderRadius:12, alignItems:'center', marginTop:15},
+  sirenText:{color:'white', fontWeight:'bold'}
 });
+
+
+
+  
+  
+
+    
+
+      
+      <TouchableOpacity style={styles.sirenBtn} onPress={siren}>
+        <Text style={styles.sirenText}>🔊 LOUD SIREN</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container:{flex:1, backgroundColor:'#FFF5F5', alignItems:'center', paddingTop:60, padding:20},
+  title:{fontSize:32, fontWeight:'bold', color:'#B91C1C'}, 
+  sub:{color:'#666', marginBottom:10},
+  sos:{width:200, height:200, borderRadius:100, backgroundColor:'#DC2626', justifyContent:'center', alignItems:'center', marginVertical:15, borderWidth:4, borderColor:'white'},
+  sosText:{color:'white', fontSize:48, fontWeight:'bold'}, 
+  hint:{color:'#999', marginBottom:15},
+  card:{backgroundColor:'white', width:'100%', borderRadius:16, padding:16, elevation:3},
+  label:{fontWeight:'bold', marginBottom:10}, 
+  input:{backgroundColor:'#F3F4F6', borderRadius:8, padding:12, marginBottom:10},
+  sirenBtn:{backgroundColor:'#111827', width:'100%', padding:16, borderRadius:12, alignItems:'center', marginTop:15},
+  sirenText:{color:'white', fontWeight:'bold'}
+});
+  
