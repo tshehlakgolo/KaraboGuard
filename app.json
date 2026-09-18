@@ -2,11 +2,24 @@
   "expo": {
     "name": "KaraboGuard",
     "slug": "karaboguard",
-    "version": "7.4.0",
+    "version": "7.4.1",
     "orientation": "portrait",
+    "splash": {
+      "backgroundColor": "#000000",
+      "resizeMode": "contain"
+    },
     "android": {
       "package": "com.karabo.guard"
     },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#000000",
+          "resizeMode": "contain"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
