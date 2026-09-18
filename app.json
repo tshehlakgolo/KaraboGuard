@@ -4,21 +4,23 @@
     "slug": "karaboguard",
     "version": "1.0.0",
     "orientation": "portrait",
-    "owner": "tshehlakgolo",
+    "icon": "./assets/icon.png",
     "splash": {
-      "backgroundColor": "#ffffff",
-      "resizeMode": "contain"
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "android": {
-      "package": "com.karaboguard.app",
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "SEND_SMS", "READ_CONTACTS", "RECORD_AUDIO"],
-      "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
-      }
+      "package": "com.tshehlakgolo.karaboguard",
+      "permissions": [
+        "android.permission.SEND_SMS",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "extra": {
       "eas": {
-        "projectId": "12c0970b-ccdc-4"
+        "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
       }
     }
   }
