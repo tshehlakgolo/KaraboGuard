@@ -11,13 +11,14 @@
     },
     "android": {
       "package": "com.karaboguard.app",
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "SEND_SMS", "READ_CONTACTS", "RECORD_AUDIO"],
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       }
     },
     "extra": {
       "eas": {
-        "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d"
+        "projectId": "12c0970b-ccdc-4"
       }
     }
   }
