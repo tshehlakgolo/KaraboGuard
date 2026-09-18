@@ -3,7 +3,6 @@
     "name": "KaraboGuard",
     "slug": "karaboguard",
     "version": "7.4.2",
-    "orientation": "portrait",
     "android": {
       "package": "com.karabo.guard"
     },
