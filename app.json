@@ -2,14 +2,16 @@
   "expo": {
     "name": "KaraboGuard",
     "slug": "karaboguard",
-    "version": "6.0.0",
+    "version": "6.0.1",
+    "orientation": "portrait",
     "icon": "./IMG-20260918-WA7871.jpg",
+    "splash": {
+      "image": "./IMG-20260918-WA7871.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "android": {
-      "package": "com.karabo.guard",
-      "adaptiveIcon": {
-        "foregroundImage": "./IMG-20260918-WA7871.jpg",
-        "backgroundColor": "#ffffff"
-      }
+      "package": "com.karabo.guard"
     },
     "extra": {
       "eas": {
