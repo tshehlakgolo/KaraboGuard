@@ -2,9 +2,19 @@
   "expo": {
     "name": "KaraboGuard",
     "slug": "karaboguard",
-    "version": "7.4.3",
-    "android": { "package": "com.karabo.guard" },
-    "splash": { "backgroundColor": "#ffffff" },
-    "extra": { "eas": { "projectId": "12c0970b-ccdc-40f6-9b79-4d14d2b7b09d" } }
+    "version": "1.0.0",
+    "icon": "./icon.png",
+    "splash": {
+      "image": "./splash.png",
+      "backgroundColor": "#0a0a0a",
+      "resizeMode": "contain"
+    },
+    "android": {
+      "package": "com.karabo.guard",
+      "adaptiveIcon": {
+        "foregroundImage": "./icon.png",
+        "backgroundColor": "#000000"
+      }
+    }
   }
 }
